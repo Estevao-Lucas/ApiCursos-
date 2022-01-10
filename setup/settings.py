@@ -40,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'setup.urls'
@@ -131,7 +132,18 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100/day',
-    }
+    },
+    #Adicionado a leitura XML da API junto com JSON
+    # 'DEFAULT_PARSER_CLASSES': [
+    #     'rest_framework_xml.parsers.XMLParser',
+    #     'rest_framework.parsers.JSONParser',
+    # ],
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework_xml.renderers.XMLRenderer',
+    #     'rest_framework.renderers.JSONRenderer',
+    # ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 15
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -139,11 +151,6 @@ CORS_ALLOWED_ORIGINS = [
 
 ]
 
-#Paginação Api
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 15
-}
 
 #Utilização do Redis para o armazenamento Cache 
 # CACHE = {
@@ -158,3 +165,7 @@ REST_FRAMEWORK = {
 
 # SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 # SESSION_CACHE_ALIAS = 'default'
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
